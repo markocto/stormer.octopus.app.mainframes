@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+*.pyc
+__pycache__/
+
+# COBOL compiler output
+*.o
+*.lst
+*.xref
+
+# Load modules / executables (keep source, not binaries)
+*.load
+*.exe
+
+# JCL spool output
+*.spool
+*.log
+
+# Editor backup files
+*.bak
+*~
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Octopus Deploy local overrides
+.octopus/local/
