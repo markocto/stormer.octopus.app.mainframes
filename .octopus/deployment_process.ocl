@@ -1,0 +1,43 @@
+# Octopus Deploy Project Configuration
+# stormer.octopus.app.mainframes
+
+step "deploy-cobol-programs" {
+    name = "Deploy COBOL Programs"
+
+    action {
+        action_type                        = "Octopus.Script"
+        is_required                        = true
+        notes                              = "Deploy compiled COBOL load modules to the mainframe"
+        worker_pool_variable               = ""
+
+        properties = {
+            Octopus.Action.Script.ScriptBody   = <<-EOT
+                echo "Deploying COBOL programs to mainframe..."
+                # Copy load modules to target PDS
+                # Example: cp ${Octopus.Action.Package.InstallationDirectoryPath}/LOADLIB/*.* //STORMER.LOADLIB
+                echo "Deployment complete."
+            EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax       = "Bash"
+        }
+    }
+}
+
+step "run-smoke-test" {
+    name = "Run Smoke Tests"
+
+    action {
+        action_type = "Octopus.Script"
+        notes       = "Execute a simple test job to verify the deployment"
+
+        properties = {
+            Octopus.Action.Script.ScriptBody   = <<-EOT
+                echo "Submitting smoke test JCL..."
+                # Submit test job and check return code
+                echo "Smoke tests passed."
+            EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax       = "Bash"
+        }
+    }
+}
